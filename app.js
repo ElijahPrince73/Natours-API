@@ -1,12 +1,14 @@
 const fs = require('fs');
 const express  = require('express');
+const morgan = require('morgan');
 const { error } = require('console');
 const { json } = require('body-parser');
 
 
 const app =express();
 
-// middleware to modify the request by adding the incomeing data to be on the req.body
+// Middleware
+app.use(morgan('dev'))
 app.use(express.json())
 
 const port = 3000
@@ -15,6 +17,8 @@ const toursFile = `${__dirname}/dev-data/data/tours-simple.json`
 
 const tours = JSON.parse(fs.readFileSync(toursFile))
 
+
+// Route Handlers
 const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -80,28 +84,58 @@ const deleteTour = (req, res) => {
   })
 }
 
-// app.get('/api/v1/tours', getAllTours)
+const getAllUsers = (req, res) => {
+    res.status(200).json({
+    status: 'success',
+    data: {
+      tour: 'DELETED'
+    }
+  })
+}
 
-// app.post('/api/v1/tours', createTour)
+const createUser = (req, res) => {
+  res.status(500)
+}
 
-// app.get('/api/v1/tours/:id', getTour)
+const getUser = (req, res) =>  {
+    res.status(200).json({
+    status: 'success',
+    data: {
+      tour: 'DELETED'
+    }
+  })
+}
 
-// app.patch('/api/v1/tours/:id', updatetour)
+const updateUser = (req, res) => {
+  res.status(500)
+}
 
-// app.delete('/api/v1/tours/:id', deleteTour)
+const deleteUser = (req, res) => {
+  res.status(500)
+}
 
+// Routes
 app
   .route('/api/v1/tours')
   .get(getAllTours)
   .post(createTour)
 
   app
-    .route('/api/v1/tours:id')
+    .route('/api/v1/tours/:id')
     .get(getTour)
     .patch(updatetour)
     .delete(deleteTour)
     
+app.route('/api/v1/users')
+    .get(getAllUsers)
+    .post(createUser)
 
+app.route('/api/v1/users/:id')
+    .get(getUser)
+    .patch(updateUser)
+    .delete(deleteUser)
+
+// Server
 app.listen(port, () => {
   console.log('App running on port: ' + port);
 })
