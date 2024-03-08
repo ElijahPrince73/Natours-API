@@ -115,27 +115,34 @@ const deleteUser = (req, res) => {
 }
 
 // Routes
-app
-  .route('/api/v1/tours')
-  .get(getAllTours)
-  .post(createTour)
 
-  app
-    .route('/api/v1/tours/:id')
+const toursRouter = express.Router()
+const userRouter = express.Router()
+
+app.use('/api/v1/tours', toursRouter)
+app.use('/api/v1/users', toursRouter)
+
+  toursRouter
+    .route('/')
+    .get(getAllTours)
+    .post(createTour)
+
+  toursRouter
+    .route('/:id')
     .get(getTour)
     .patch(updatetour)
     .delete(deleteTour)
     
-app.route('/api/v1/users')
-    .get(getAllUsers)
-    .post(createUser)
+  userRouter.route('/')
+      .get(getAllUsers)
+      .post(createUser)
 
-app.route('/api/v1/users/:id')
-    .get(getUser)
-    .patch(updateUser)
-    .delete(deleteUser)
+  userRouter.route('/:id')
+      .get(getUser)
+      .patch(updateUser)
+      .delete(deleteUser)
 
-// Server
-app.listen(port, () => {
-  console.log('App running on port: ' + port);
-})
+  // Server
+  app.listen(port, () => {
+    console.log('App running on port: ' + port);
+  })
