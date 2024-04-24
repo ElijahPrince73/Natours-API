@@ -21,8 +21,16 @@ exports.getAllTours = async (req, res) => {
       (match) => `$${match}`,
     );
 
-    console.log(queryString);
-    const query = Tour.find(JSON.parse(queryString));
+    let query = Tour.find(JSON.parse(queryString));
+
+    // 3 Sorting
+
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
 
     // EXECUTE THE QUERY
     const tours = await query;
