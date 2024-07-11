@@ -32,11 +32,29 @@ exports.getAllTours = async (req, res) => {
     }
 
     // 4 Field limiting
+    // Used for grabbing certain data
+    // EX: ?fields=name, duration, price, description
     if (req.query.fields) {
       const fields = req.query.fields.split(",").join(" ");
       query = query.select(fields);
     } else {
       query = query.select("-__v");
+    }
+
+    // 4) Pagination
+
+    const page = Number(req.query.page);
+    const limit = Number(req.query.limit) || 100;
+    const skip = (page - 1) * limit;
+    // EX: page=2,limit=10
+    query = query.skip(skip).limit(limit);
+
+    if (req.query.page) {
+      const numOfTours = await Tour.countDocuments();
+
+      if (skip > numOfTours) {
+        throw new Error("This page does not exist");
+      }
     }
 
     // EXECUTE THE QUERY
