@@ -5,6 +5,13 @@ const Tour = require("../models/tourModel");
 
 // const tours = JSON.parse(fs.readFileSync(toursFile));
 
+exports.aliasTopTours = async (req, res, next) => {
+  req.query.limit = "5";
+  req.query.sort = "-ratingsAvergage,price";
+  req.query.fields = "name, price, ratingsAvergage, summary, difficulty";
+  next();
+};
+
 exports.getAllTours = async (req, res) => {
   try {
     // BUILD THE QUERY
