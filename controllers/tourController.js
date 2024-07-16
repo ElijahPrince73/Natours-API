@@ -1,9 +1,4 @@
-const fs = require("fs");
 const Tour = require("../models/tourModel");
-
-// const toursFile = `${__dirname}/../dev-data/data/tours-simple.json`;
-
-// const tours = JSON.parse(fs.readFileSync(toursFile));
 
 exports.aliasTopTours = async (req, res, next) => {
   req.query.limit = "5";
@@ -171,6 +166,39 @@ exports.deleteTour = async (req, res) => {
       status: "success",
       data: {
         tour,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: error,
+    });
+  }
+};
+
+exports.getTourStats = async (req, res) => {
+  try {
+    const stats = await Tour.aggregate([
+      {
+        $match: { ratingsAverage: { $gte: 4.5 } },
+      },
+      {
+        $group: {
+          _id: "$difficulty",
+          numTours: { $sum: 1 },
+          numRatings: { $sum: "ratingsQuantity" },
+          avgRating: { $avg: "$ratingsAverage" },
+          avgPrice: { $avg: "$price" },
+          minPrice: { $min: "$price" },
+          maxPrice: { $max: "$price" },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        stats,
       },
     });
   } catch (error) {
