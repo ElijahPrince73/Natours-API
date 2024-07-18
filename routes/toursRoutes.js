@@ -10,7 +10,10 @@ const {
   updatetour,
   deleteTour,
   getTourStats,
+  getMonthlyPlan,
 } = require("../controllers/tourController");
+
+router.route("/monthly-plan/:year").get(getMonthlyPlan);
 
 router.route("/tour-stats").get(getTourStats);
 
