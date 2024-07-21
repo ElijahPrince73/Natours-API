@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
 
 const toursSchema = new mongoose.Schema(
   {
@@ -6,6 +7,9 @@ const toursSchema = new mongoose.Schema(
       type: String,
       required: [true, "A tour must have a name"],
       unique: true,
+    },
+    slug: {
+      type: String,
     },
     duration: {
       type: Number,
@@ -70,6 +74,18 @@ const toursSchema = new mongoose.Schema(
 // Use regular function to gain access to the this keyword
 toursSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
+});
+
+// Document Middleware: runs BEFORE .save() method and .create()
+toursSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// Document Middleware: runs AFTER .save() method and .create()
+toursSchema.post("save", (doc, next) => {
+  console.log(doc);
+  next();
 });
 
 const Tour = mongoose.model("Tour", toursSchema);
