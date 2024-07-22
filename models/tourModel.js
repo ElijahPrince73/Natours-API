@@ -57,6 +57,10 @@ const toursSchema = new mongoose.Schema(
       select: false,
     },
     startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
   },
   // Used to add virtuals
   {
@@ -85,6 +89,12 @@ toursSchema.pre("save", function (next) {
 // Document Middleware: runs AFTER .save() method and .create()
 toursSchema.post("save", (doc, next) => {
   console.log(doc);
+  next();
+});
+
+// Query Middleware: runs BEFORE .save() method and
+toursSchema.pre("find", function (next) {
+  this.find({ secretTour: { $ne: true } });
   next();
 });
 
