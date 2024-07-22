@@ -93,8 +93,16 @@ toursSchema.post("save", (doc, next) => {
 });
 
 // Query Middleware: runs BEFORE .save() method and
-toursSchema.pre("find", function (next) {
+toursSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
+
+  this.start = Date.now();
+  next();
+});
+
+toursSchema.post(/^find/, function (docs, next) {
+  console.log(`Query took ${Date.now() - this.start} miliseconds`);
+  console.log(docs);
   next();
 });
 
