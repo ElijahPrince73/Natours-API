@@ -141,6 +141,7 @@ exports.updatetour = async (req, res) => {
   try {
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
+      // this setting makes sure that the tour validators are run again
       runValidators: true,
     });
 
