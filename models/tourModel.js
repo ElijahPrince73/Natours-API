@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const validator = require("validator");
 
 const toursSchema = new mongoose.Schema(
   {
@@ -9,6 +10,7 @@ const toursSchema = new mongoose.Schema(
       unique: true,
       maxLength: [40, "A tour name must have less or equal then 40 characters"],
       minLength: [10, "A tour name must have more than 10 characters"],
+      validate: [validator.isAlpha, "Tour name must only contain characters"],
     },
     slug: {
       type: String,
@@ -45,7 +47,16 @@ const toursSchema = new mongoose.Schema(
       type: Number,
       required: [true, "A tour must have a price"],
     },
-    priceDiscount: Number,
+    priceDiscount: {
+      type: Number,
+      validate: {
+        message: "Discount price ({VALUE}) must be cheaper than price",
+        validator: function (val) {
+          // this only points to current document on NEW document creation not update
+          return val < this.price; // 100 - 200
+        },
+      },
+    },
     summary: {
       type: String,
       trim: [true, "A tour must have a summary"],
@@ -98,7 +109,6 @@ toursSchema.pre("save", function (next) {
 
 // Document Middleware: runs AFTER .save() method and .create()
 toursSchema.post("save", (doc, next) => {
-  console.log(doc);
   next();
 });
 
@@ -110,9 +120,9 @@ toursSchema.pre(/^find/, function (next) {
   next();
 });
 
-toursSchema.post(/^find/, function (docs, next) {
-  console.log(`Query took ${Date.now() - this.start} miliseconds`);
-  console.log(docs);
+toursSchema.post(/^find/, (docs, next) => {
+  // console.log(`Query took ${Date.now() - this.start} miliseconds`);
+  // console.log(docs);
   next();
 });
 
