@@ -17,7 +17,10 @@ const sendErrorProd = (err, res) => {
       message: err.message,
     });
   } else {
-    console.error("----------------------ERROR-----------------------");
+    console.error(
+      "----------------------ERROR-----------------------",
+      err.errors,
+    );
     res.status(500).json({
       status: "error",
       message: "Something went wrong",
@@ -36,6 +39,13 @@ const handleDuplicateFieldsDB = (err) => {
   return new AppError(message, 400);
 };
 
+const handleValidationErrorDB = (err) => {
+  const error = Object.values(err.errors).map((el) => el.message);
+  const message = `Invalid input error ${error.join(". ")}`;
+
+  return new AppError(message, 400);
+};
+
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
@@ -44,8 +54,11 @@ module.exports = (err, req, res, next) => {
     sendErroDev(err, res);
   } else if (process.env.NODE_ENV === "production") {
     let error = { ...err };
+
     if (error.name === "CastError") error = handlecastErrorDB(err);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+    if (error._message === "Validation failed")
+      error = handleValidationErrorDB(error);
     sendErrorProd(error, res);
   }
 };
