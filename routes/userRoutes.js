@@ -6,7 +6,7 @@ const {
   updateUser,
   deleteUser,
 } = require("../controllers/userController");
-const { signup } = require("../controllers/authController");
+const { signup, login } = require("../controllers/authController");
 
 const router = express.Router();
 
@@ -14,6 +14,7 @@ const router = express.Router();
 // This route is used to create a new user account.
 // The signup function will handle the logic for registering a new user.
 router.post("/signup", signup);
+router.post("/login", login);
 
 // Using router.route to handle multiple requests on the same route
 // This route handles GET and POST requests for the root URL ("/").
