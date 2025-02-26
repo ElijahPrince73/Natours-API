@@ -12,7 +12,7 @@ const {
   getMonthlyPlan,
 } = require("../controllers/tourController");
 
-const { protect } = require("../controllers/authController");
+const { protect, restrictTo } = require("../controllers/authController");
 
 router.route("/monthly-plan/:year").get(getMonthlyPlan);
 
@@ -26,6 +26,10 @@ router.route("/top-5-cheap").get(aliasTopTours, getAllTours);
 // If the user is not logged in, the protect middleware will return an error.
 router.route("/").get(protect, getAllTours).post(createTour);
 
-router.route("/:id").get(getTour).patch(updatetour).delete(deleteTour);
+router
+  .route("/:id")
+  .get(getTour)
+  .patch(updatetour)
+  .delete(protect, restrictTo("admin", "lead-guide"), deleteTour);
 
 module.exports = router;

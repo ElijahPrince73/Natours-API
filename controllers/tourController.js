@@ -89,6 +89,10 @@ exports.deleteTour = catchAsync(async (req, res, next) => {
   if (!isValidObjectId(req.params.id))
     return next(new AppError(`The tour is not found with the id.`, 404));
 
+  const tourfound = await Tour.findById(req.params.id);
+
+  console.log(tourfound);
+
   const tour = await Tour.findByIdAndDelete(req.params.id);
 
   res.status(204).json({

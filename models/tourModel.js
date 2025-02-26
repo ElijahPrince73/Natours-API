@@ -10,7 +10,7 @@ const toursSchema = new mongoose.Schema(
       unique: true,
       maxLength: [40, "A tour name must have less or equal then 40 characters"],
       minLength: [10, "A tour name must have more than 10 characters"],
-      validate: [validator.isAlpha, "Tour name must only contain characters"],
+      // validate: [validator.isAlpha, "Tour name must only contain characters"],
     },
     slug: {
       type: String,
@@ -91,7 +91,7 @@ const toursSchema = new mongoose.Schema(
     toObject: {
       virtuals: true,
     },
-  },
+  }
 );
 
 // Virttuals are used as a way to add data to the returned schema without it existing in the database. Mainly used for business logic.
@@ -113,6 +113,9 @@ toursSchema.post("save", (doc, next) => {
 });
 
 // Query Middleware: runs BEFORE or AFTER .find() method
+
+// In the middleware function, `this` refers to the query object. The line `this.find({ secretTour: { $ne: true } });` modifies the query to exclude documents where the `secretTour` field is set to `true`. The `$ne` operator stands for "not equal," so this ensures that only tours that are not secret are included in the results.
+
 toursSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
 
