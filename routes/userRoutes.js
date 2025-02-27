@@ -6,13 +6,21 @@ const {
   updateUser,
   deleteUser,
 } = require("../controllers/userController");
-const { signup, login } = require("../controllers/authController");
+const {
+  signup,
+  login,
+  forgotPassword,
+  resetPassword,
+} = require("../controllers/authController");
 
 const router = express.Router();
 
 // POST request to handle user signup
 // This route is used to create a new user account.
 // The signup function will handle the logic for registering a new user.
+
+router.post("/forgotPassword", forgotPassword);
+router.post("/resetPassword/:token", resetPassword);
 router.post("/signup", signup);
 router.post("/login", login);
 
