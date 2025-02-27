@@ -91,8 +91,6 @@ exports.deleteTour = catchAsync(async (req, res, next) => {
 
   const tourfound = await Tour.findById(req.params.id);
 
-  console.log(tourfound);
-
   const tour = await Tour.findByIdAndDelete(req.params.id);
 
   res.status(204).json({

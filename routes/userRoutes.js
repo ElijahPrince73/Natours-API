@@ -20,7 +20,7 @@ const router = express.Router();
 // The signup function will handle the logic for registering a new user.
 
 router.post("/forgotPassword", forgotPassword);
-router.post("/resetPassword/:token", resetPassword);
+router.patch("/resetPassword/:token", resetPassword);
 router.post("/signup", signup);
 router.post("/login", login);
 
