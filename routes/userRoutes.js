@@ -5,6 +5,7 @@ const {
   getUser,
   updateUser,
   deleteUser,
+  updateMe,
 } = require("../controllers/userController");
 const {
   signup,
@@ -27,6 +28,9 @@ router.patch("/resetPassword/:token", resetPassword);
 router.post("/signup", signup);
 router.post("/login", login);
 router.patch("/updateMyPassword", protect, updatePassword);
+
+// USER UPDATE
+router.patch("/updateMe", protect, updateMe);
 
 // Using router.route to handle multiple requests on the same route
 // This route handles GET and POST requests for the root URL ("/").
