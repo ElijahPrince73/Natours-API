@@ -11,6 +11,8 @@ const {
   login,
   forgotPassword,
   resetPassword,
+  updatePassword,
+  protect,
 } = require("../controllers/authController");
 
 const router = express.Router();
@@ -19,10 +21,12 @@ const router = express.Router();
 // This route is used to create a new user account.
 // The signup function will handle the logic for registering a new user.
 
+// AUTHENTICATION
 router.post("/forgotPassword", forgotPassword);
 router.patch("/resetPassword/:token", resetPassword);
 router.post("/signup", signup);
 router.post("/login", login);
+router.patch("/updateMyPassword", protect, updatePassword);
 
 // Using router.route to handle multiple requests on the same route
 // This route handles GET and POST requests for the root URL ("/").
