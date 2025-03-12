@@ -6,6 +6,7 @@ const {
   updateUser,
   deleteUser,
   updateMe,
+  deleteMe,
 } = require("../controllers/userController");
 const {
   signup,
@@ -31,6 +32,7 @@ router.patch("/updateMyPassword", protect, updatePassword);
 
 // USER UPDATE
 router.patch("/updateMe", protect, updateMe);
+router.delete("/deleteMe", protect, deleteMe);
 
 // Using router.route to handle multiple requests on the same route
 // This route handles GET and POST requests for the root URL ("/").
