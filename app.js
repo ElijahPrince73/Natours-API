@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
 
 const AppError = require("./utils/appError");
 
@@ -11,10 +12,15 @@ const globalErrorHandler = require("./controllers/errorController");
 const app = express();
 
 // GLOBAL Middleware
+// Security HTTP headers
+app.use(helmet());
+
+// Dev Logging
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+// Rate Limiter
 // Within an hour specify how many times the server can be accessed from an IP address.
 const limiter = rateLimit({
   max: 100,
@@ -24,9 +30,17 @@ const limiter = rateLimit({
 
 app.use("/api", limiter);
 
-app.use(express.json());
+// Body parser, reading data from body to req.body
+app.use(
+  express.json({
+    limit: "10kb",
+  })
+);
+
+// Serving static files
 app.use(express.static(`${__dirname}/public/`));
 
+// API Routes
 app.use("/api/v1/tours", toursRouter);
 app.use("/api/v1/users", userRouter);
 
