@@ -381,45 +381,6 @@
   },
   {
     "startLocation": {
-      "description": "Yellowknife, CAN",
-      "type": "Point",
-      "coordinates": [-114.406097, 62.439943],
-      "address": "Yellowknife, NT X1A 2L2, Canada"
-    },
-    "ratingsAverage": 4.7,
-    "ratingsQuantity": 7,
-    "images": ["tour-9-1.jpg", "tour-9-2.jpg", "tour-9-3.jpg"],
-    "startDates": [
-      "2021-12-16T10:00:00.000Z",
-      "2022-01-16T10:00:00.000Z",
-      "2022-12-12T10:00:00.000Z"
-    ],
-    "_id": "5c88fa8cf4afda39709c2974",
-    "name": "The Northern Lights",
-    "duration": 3,
-    "maxGroupSize": 12,
-    "difficulty": "easy",
-    "guides": [
-      "5c8a21f22f8fb814b56fa18a",
-      "5c8a201e2f8fb814b56fa186",
-      "5c8a23412f8fb814b56fa18c"
-    ],
-    "price": 1497,
-    "summary": "Enjoy the Northern Lights in one of the best places in the world",
-    "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!\nDolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipisicing elit!",
-    "imageCover": "tour-9-cover.jpg",
-    "locations": [
-      {
-        "_id": "5c88fa8cf4afda39709c2975",
-        "description": "Yellowknife",
-        "type": "Point",
-        "coordinates": [-114.406097, 62.439943],
-        "day": 1
-      }
-    ]
-  },
-  {
-    "startLocation": {
       "description": "California, USA",
       "type": "Point",
       "coordinates": [-122.29286, 38.294065],
