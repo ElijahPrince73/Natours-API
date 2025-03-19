@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
-const validator = require("validator");
+// const User = require("./userModel");
 
 const toursSchema = new mongoose.Schema(
   {
@@ -106,6 +106,12 @@ const toursSchema = new mongoose.Schema(
         day: Number,
       },
     ],
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   // Used to add virtuals
   {
@@ -130,6 +136,16 @@ toursSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
+
+// Used to embed guides
+// toursSchema.pre("save", async function (next) {
+//   const guidesPromises = this.guides.map(async (id) => {
+//     return await User.findById(id);
+//   });
+
+//   this.guides = await Promise.all(guidesPromises);
+//   next();
+// });
 
 // Document Middleware: runs AFTER .save() method and .create()
 toursSchema.post("save", (doc, next) => {
