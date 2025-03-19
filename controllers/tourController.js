@@ -44,6 +44,16 @@ exports.getTour = catchAsync(async (req, res, next) => {
   if (!isValidObjectId(req.params.id))
     return next(new AppError(`The tour is not found with the id.`, 404));
 
+  // if we use .populate on a find it basically looks at the id's in an array and populates them with data on request. Using the populate is also a request and can slow down the application if we have huge queries.
+
+  // const tour = await Tour.findById(req.params.id).populate("guides");
+
+  // We can specify what fields we want to remove from the incoming child documents with a object and select
+  // const tour = await Tour.findById(req.params.id).populate({
+  //   path: "guides",
+  //   select: "-__v -passwordChangedAt",
+  // });
+
   const tour = await Tour.findById(req.params.id);
 
   // For looking up things as well
