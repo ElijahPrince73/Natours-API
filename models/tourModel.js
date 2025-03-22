@@ -131,6 +131,17 @@ toursSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
 });
 
+// Virtual Populate
+// Naming the virtual field to populate in the controller
+toursSchema.virtual("reviews", {
+  ref: "Review",
+  // Reference where this is stored in another model
+  // Here we are specificy tour because its in the Review model
+  foreignField: "tour",
+  // Within the foreign field we are wanting it to look up the tour by the _id field
+  localField: "_id",
+});
+
 // Document Middleware: runs BEFORE .save() method and .create()
 toursSchema.pre("save", function (next) {
   this.slug = slugify(this.name, { lower: true });
