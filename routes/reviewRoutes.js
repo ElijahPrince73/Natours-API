@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 
 // POST /tour/sdfs23df3/reviews
-// So if we get a route like the one above express will automatically redirect it to the reviews router.  We can now gain access to the tour ID
+// So if we get a route like the one above express will automatically redirect it to the reviews router.  We can now gain access to the tourId param
 
 const {
   getAllReviews,
