@@ -78,23 +78,7 @@ exports.createTour = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updatetour = catchAsync(async (req, res, next) => {
-  if (!isValidObjectId(req.params.id))
-    return next(new AppError(`The tour is not found with the id.`, 404));
-
-  const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    // this setting makes sure that the tour validators are run again
-    runValidators: true,
-  });
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      tour,
-    },
-  });
-});
+exports.updatetour = factory.updateOne(Tour);
 
 exports.deleteTour = factory.deleteOne(Tour);
 
