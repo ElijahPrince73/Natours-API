@@ -1,7 +1,6 @@
 const express = require("express");
 const {
   getAllUsers,
-  createUser,
   getUser,
   updateUser,
   deleteUser,
@@ -39,7 +38,7 @@ router.delete("/deleteMe", protect, deleteMe);
 // This route handles GET and POST requests for the root URL ("/").
 // GET request to fetch all users (getAllUsers function).
 // POST request to create a new user (createUser function).
-router.route("/").get(getAllUsers).post(createUser);
+router.route("/").get(getAllUsers);
 
 // GET request to fetch a specific user by ID (getUser function).
 // PATCH request to update a specific user by ID (updateUser function).

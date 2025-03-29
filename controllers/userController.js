@@ -24,10 +24,6 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createUser = (req, res) => {
-  res.status(500);
-};
-
 exports.getUser = (req, res) => {
   res.status(200).json({
     status: "success",

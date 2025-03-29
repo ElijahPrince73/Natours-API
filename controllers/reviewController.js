@@ -19,7 +19,7 @@ exports.getAllReviews = catchAsync(async (req, res) => {
   });
 });
 
-exports.createReview = catchAsync(async (req, res) => {
+exports.setTourUserIds = (req, res, next) => {
   // Allow nested routes
   if (!req.body.tour) {
     req.body.tour = req.params.tourId;
@@ -27,23 +27,10 @@ exports.createReview = catchAsync(async (req, res) => {
   if (!req.body.user) {
     req.body.user = req.user.id;
   }
-  const { review, rating, tour } = req.body;
-  const { user } = req;
+  next();
+};
 
-  const newReview = await Review.create({
-    review,
-    rating,
-    tour,
-    user: user.id,
-  });
-
-  res.status(200).json({
-    status: "succes",
-    data: {
-      review: newReview,
-    },
-  });
-});
+exports.createReview = factory.createOne(Review);
 
 exports.updateReview = factory.updateOne(Review);
 
