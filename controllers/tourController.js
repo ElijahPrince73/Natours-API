@@ -3,6 +3,7 @@ const Tour = require("../models/tourModel");
 const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
+const factory = require("./handlerFactory");
 
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
@@ -95,19 +96,21 @@ exports.updatetour = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteTour = catchAsync(async (req, res, next) => {
-  if (!isValidObjectId(req.params.id))
-    return next(new AppError(`The tour is not found with the id.`, 404));
+exports.deleteTour = factory.deleteOne(Tour);
 
-  const tour = await Tour.findByIdAndDelete(req.params.id);
+// exports.deleteTour = catchAsync(async (req, res, next) => {
+//   if (!isValidObjectId(req.params.id))
+//     return next(new AppError(`The tour is not found with the id.`, 404));
 
-  res.status(204).json({
-    status: "success",
-    data: {
-      tour,
-    },
-  });
-});
+//   const tour = await Tour.findByIdAndDelete(req.params.id);
+
+//   res.status(204).json({
+//     status: "success",
+//     data: {
+//       tour,
+//     },
+//   });
+// });
 
 exports.getTourStats = catchAsync(async (req, res) => {
   const stats = await Tour.aggregate([

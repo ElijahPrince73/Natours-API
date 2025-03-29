@@ -15,6 +15,7 @@ const {
   resetPassword,
   updatePassword,
   protect,
+  restrictTo,
 } = require("../controllers/authController");
 
 const router = express.Router();
@@ -43,6 +44,10 @@ router.route("/").get(getAllUsers).post(createUser);
 // GET request to fetch a specific user by ID (getUser function).
 // PATCH request to update a specific user by ID (updateUser function).
 // DELETE request to delete a specific user by ID (deleteUser function).
-router.route("/:id").get(getUser).patch(updateUser).delete(deleteUser);
+router
+  .route("/:id")
+  .get(getUser)
+  .patch(updateUser)
+  .delete(protect, restrictTo("admin"), deleteUser);
 
 module.exports = router;
