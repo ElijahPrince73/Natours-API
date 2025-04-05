@@ -126,6 +126,9 @@ const toursSchema = new mongoose.Schema(
 
 // Virttuals are used as a way to add data to the returned schema without it existing in the database. Mainly used for business logic.
 
+toursSchema.index({ price: 1, ratingsAverage: 1 });
+toursSchema.index({ slug: 1 });
+
 // Use regular function to gain access to the this keyword
 toursSchema.virtual("durationWeeks").get(function () {
   return this.duration / 7;
