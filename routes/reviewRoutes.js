@@ -17,15 +17,17 @@ const {
 
 const { protect, restrictTo } = require("../controllers/authController");
 
+// Protect middleware
+router.use(protect);
 router
   .route("/")
-  .get(protect, getAllReviews)
-  .post(protect, restrictTo("user"), setTourUserIds, createReview);
+  .get(getAllReviews)
+  .post(restrictTo("user"), setTourUserIds, createReview);
 
 router
   .route("/:id")
-  .get(protect, getReview)
-  .delete(protect, deleteReview)
-  .patch(protect, updateReview);
+  .get(getReview)
+  .delete(restrictTo("user"), deleteReview)
+  .patch(restrictTo("user"), updateReview);
 
 module.exports = router;
