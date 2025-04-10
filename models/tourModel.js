@@ -128,6 +128,7 @@ const toursSchema = new mongoose.Schema(
 
 toursSchema.index({ price: 1, ratingsAverage: 1 });
 toursSchema.index({ slug: 1 });
+toursSchema.index({ startLocation: "2dspheer" });
 
 // Use regular function to gain access to the this keyword
 toursSchema.virtual("durationWeeks").get(function () {
