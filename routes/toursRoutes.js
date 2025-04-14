@@ -11,6 +11,7 @@ const {
   getTourStats,
   getMonthlyPlan,
   getToursWithin,
+  getDistances,
 } = require("../controllers/tourController");
 
 const reviewRouter = require("./reviewRoutes");
@@ -30,6 +31,8 @@ router.route("/top-5-cheap").get(aliasTopTours, getAllTours);
 router
   .route("/tours-within/:distance/center/:latlng/unit/:unit")
   .get(getToursWithin);
+
+router.route("/distances/:latlng/unit/:unit").get(getDistances);
 
 // Middleware to handle the protected routes
 // The protect middleware will check if the user is logged in.
