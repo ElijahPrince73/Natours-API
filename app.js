@@ -12,6 +12,7 @@ const toursRouter = require("./routes/toursRoutes");
 const userRouter = require("./routes/userRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const globalErrorHandler = require("./controllers/errorController");
+const compression = require("compression");
 
 const app = express();
 
@@ -59,8 +60,11 @@ app.use(
     ],
   })
 );
+
 // Serving static files
 app.use(express.static(`${__dirname}/public/`));
+
+app.use(compression());
 
 // API Routes
 app.use("/api/v1/tours", toursRouter);
