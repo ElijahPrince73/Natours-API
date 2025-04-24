@@ -1,1 +1,2 @@
-# Using database creds on purpose to show working project only
+LINK TO API
+https://damp-forest-06088-e5ddb9132bd7.herokuapp.com/api/v1/tours
