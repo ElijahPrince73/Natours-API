@@ -1,7 +1,1 @@
-{
-  "use": "@vercel/node@latest",
-  "src": "api/server.js",
-  "config": { "zeroConfig": true },
-  "version": 2,
-  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
-}
+{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/api" }] }
